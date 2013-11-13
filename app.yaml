@@ -15,5 +15,5 @@ handlers:
   secure: optional
 
 - url: /.*
-  script: mirror.py
+  script: mirror.app
   secure: optional
