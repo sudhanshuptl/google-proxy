@@ -67,15 +67,6 @@ TRANSFORMED_CONTENT_TYPES = frozenset([
   "text/css",
 ])
 
-MIRROR_HOSTS = frozenset([
-  'mirrorr.com',
-  'mirrorrr.com',
-  'www.mirrorr.com',
-  'www.mirrorrr.com',
-  'www1.mirrorrr.com',
-  'www2.mirrorrr.com',
-  'www3.mirrorrr.com',
-])
 
 MAX_CONTENT_SIZE = 10 ** 6
 
@@ -125,12 +116,7 @@ class MirroredContent(object):
       A new MirroredContent object, if the page was successfully retrieved.
       None if any errors occurred or the content could not be retrieved.
     """
-    # Check for the X-Mirrorrr header to ignore potential loops.
-    if base_url in MIRROR_HOSTS:
-      logging.warning('Encountered recursive request for "%s"; ignoring',
-                      mirrored_url)
-      return None
-
+    
     logging.debug("Fetching '%s'", mirrored_url)
     try:
       response = urlfetch.fetch(mirrored_url)
@@ -278,50 +264,16 @@ class MirrorHandler(BaseHandler):
     self.response.out.write(content.data)
 
 
-class AdminHandler(webapp2.RequestHandler):
-  def get(self):
-    self.response.headers['content-type'] = 'text/plain'
-    self.response.out.write(str(memcache.get_stats()))
-
-
-class KaboomHandler(webapp2.RequestHandler):
-  def get(self):
-    self.response.headers['content-type'] = 'text/plain'
-    self.response.out.write('Flush successful: %s' % memcache.flush_all())
-
-
-class CleanupHandler(webapp2.RequestHandler):
-  """Cleans up EntryPoint records."""
-
-  def get(self):
-    keep_cleaning = True
-    try:
-      content_list = EntryPoint.gql('ORDER BY last_updated').fetch(25)
-      keep_cleaning = (len(content_list) > 0)
-      db.delete(content_list)
-      
-      if content_list:
-        message = "Deleted %d entities" % len(content_list)
-      else:
-        keep_cleaning = False
-        message = "Done"
-    except (db.Error, apiproxy_errors.Error), e:
-      keep_cleaning = True
-      message = "%s: %s" % (e.__class__, e)
-
-    context = {  
-      'keep_cleaning': keep_cleaning,
-      'message': message,
-    }
-    self.response.out.write(template.render('cleanup.html', context))
-
-################################################################################
-
 app = webapp2.WSGIApplication([
   (r"/", HomeHandler),
   (r"/main", HomeHandler),
-  (r"/kaboom", KaboomHandler),
-  (r"/admin", AdminHandler),
-  (r"/cleanup", CleanupHandler),
   (r"/([^/]+).*", MirrorHandler)
 ], debug=DEBUG)
+
+
+def main():
+  wsgiref.handlers.CGIHandler().run(app)
+
+
+if __name__ == "__main__":
+  main()

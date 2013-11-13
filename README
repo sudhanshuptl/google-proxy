@@ -1,6 +1,5 @@
-Python 2.5 runtime is deprecated since March 8, 2013.
-http://googleappengine.blogspot.com/2013/03/python-25-thanks-for-good-times.html
+Setup your own proxy server using Google App Engine
 
-I fork the original version in order to support Python 2.7 runtime. You will not get any warning or error while deploying.
+Tutorial: http://www.labnol.org/internet/setup-proxy-server/12890/
 
-Enjoy!
+Video: https://www.youtube.com/watch?v=3f6Zq4prys0

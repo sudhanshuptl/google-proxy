@@ -1,89 +1,75 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-  "http://www.w3.org/TR/html4/loose.dtd">
-
 <html>
-<head>
-  <title>mirror - ɹoɹɹıɯ</title>
-  <link rel="stylesheet" href="static/base.2.css" type="text/css" charset="utf-8"/>
-  <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
-  <script type="text/javascript" charset="utf-8">
-    var activeColor = "#000000";
-    var disabledColor = "#959595";
-    var defaultValue = "type url here...";
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>My Proxy Server</title>
+        <style>
+            body {
+                font: 14px Verdana, Arial, Helvetica, sans-serif;
+            }
+            .box {
+                width:500px;
+                margin: 10px auto;
+                text-align: center;
+                padding: 20px;
+                border-top: 1px solid #CCCCCC;
+                border-right: 2px solid #CCCCCC;
+                border-bottom: 2px solid #CCCCCC;
+                border-left: 1px solid #CCCCCC;
+            }
+            h6 {
+                font: bold normal 1.2em Verdana, Arial, Helvetica, sans-serif;
+                color: #000000;
+                margin: 5px 5px 20px;
+                padding: 10px;
+                border-top: 1px solid #eee;
+                border-right: 0px solid #ddd;
+                border-bottom: 1px solid #ddd;
+                border-left: 0px solid #ddd;
+            }
+            .footer {
+                font: .9em Verdana, Arial, sans-serif;
+                margin: 8px;
+                padding: 12px 8px 8px;
+                text-align: left;
+            }
+            .credit {
+                font: .8em Verdana, Arial, sans-serif;
+                margin: 8px;
+                padding: 8px;
+                text-align: left;
+            }
+            input.txt {
+                background:#F9f9f9 url(none) repeat scroll 0%;
+                border:1px solid #999999;
+                font-size:0.9em;
+                padding:5px;
+                width:320px;
+            }
+            input.btn {
+                font-size:0.9em;
+                font-family: Arial, sans-serif;
+                width: 80px;
+                margin: 2px 0;
+                padding: 5px;
+            }
+        </style>
+    </head>
     
-    function loadBox() {
-      var box = document.getElementById("url_entry");
-      if (box.value != defaultValue) {
-        box.style.color = activeColor;
-      }
-    }
-    
-    function focusBox() {
-      var box = document.getElementById("url_entry");
-      if (box.value == defaultValue) {
-        box.value = "";
-        box.style.color = activeColor;
-      }
-    }
-    
-    function blurBox() {
-      var box = document.getElementById("url_entry");
-      if (box.value == "") {
-        box.style.color = disabledColor;
-        box.value = defaultValue;
-      }
-    }
-  </script>
-</head>
-<body onload="loadBox();">
-
-<div id="wrapper">
-<div id="container">
-
-<div id="header">
-  <span>mıɾɾoɾ</span><span>ɿoɿɿim</span>
-</div>
-
-<div id="form_wrapper">
-  <form action="" method="get" accept-charset="utf-8">
-  <div id="input_wrapper">
-    <span id="http_prefix">http://</span><input onfocus="focusBox();" onblur="blurBox();" type="text" name="url" value="type url here..." id="url_entry"/><input id="go_button" type="submit" value="Go"/>
-  </div>
-  </form>
-
-  <div id="warning">
-  Fair use: All content belongs to the original copyright holders, respectively.
-  </div>
-</div>
-
-<div id="recent">
-  <div class="header">recent</div>
-  <div id="recent_entries">
-    {% for entry in latest_urls %}
-    <div class="url_container">
-      <span class="url"><a class="url{{forloop.counter}}" rel="nofollow" href="/{{entry.translated_address}}">{% if entry.display_address %}{{entry.display_address}}{% else %}{{entry.translated_address}}{% endif %}</a></span>
-      <span class="info url{{forloop.counter}}">{{entry.last_updated|timesince}} ago</span>
-    </div>
-    {% endfor %}
-  </div>
-</div>
-
-<div class="secure">
-  {% if secure_url %}<a href="{{secure_url}}">{% endif %}<img src="/static/{% if secure_url %}no{% endif %}lock.png" width="16" height="16"> {% if secure_url %}not secure</a>{% else %}secure{% endif %}
-</div>
-
-</div>
-</div>
-
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-var pageTracker = _gat._getTracker("UA-1725949-3");
-pageTracker._initData();
-pageTracker._trackPageview();
-</script>
-
-</body>
+    <body>
+        <div class="box">
+            <h6>My Proxy Server</h1>
+                <center>
+                    <form action="" method="get" accept-charset="utf-8" target="_blank">
+                        <input name="url" type="text" class="txt" id="input" placeholder="type url here.." onfocus="this.value='';" />
+                        <input type="submit" class="btn" value="Go" />
+                    </form>
+                </center>
+                <p class="footer">Instructions: Just type the URL of any web page in the input box above (
+                    <em>e.g. labnol.org</em> ) and hit Enter.</p>
+                <p class="footer">You too can
+                    <a href="http://www.labnol.org/internet/setup-proxy-server/12890/">setup a personal proxy server</a> using Google App Engine. For support, contact
+                    <a href="http://twitter.com/labnol">@labnol</a> from
+                    <a href="http://www.labnol.org/">Digital Inspiration</a>.</p>
+        </div>
+    </body>
 </html>
